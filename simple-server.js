@@ -30,9 +30,16 @@ app.get('/api/health', (req, res) => {
   res.json({ message: 'Server is running!', status: 'ok' });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ message: 'All in One Pros API', status: 'active' });
 });
+
+// Start server (only for local development)
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
 export default app;

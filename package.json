@@ -5,8 +5,8 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "node simple-server.js",
-    "dev": "node --watch simple-server.js",
+    "start": "node local.js",
+    "dev": "node --watch local.js",
     "create-admin": "node scripts/createAdmin.js",
     "add-sample-data": "node scripts/addSampleData.js"
   },
