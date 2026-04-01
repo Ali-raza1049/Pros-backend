@@ -1,6 +1,4 @@
-import server from '../server.js'; // import your full Express app
+import app from './simple-server.js';
 
-// Vercel serverless handler
-export default function handler(req, res) {
-  server(req, res);
-}
+// For Vercel deployment
+export default app;

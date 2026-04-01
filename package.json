@@ -5,11 +5,8 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js",
-    "smart-start": "node start-server.js",
-    "stop-server": "taskkill /F /IM node.exe 2>nul || echo No Node.js processes found",
-    "check-port": "netstat -ano | findstr :5000",
+    "start": "node simple-server.js",
+    "dev": "node --watch simple-server.js",
     "create-admin": "node scripts/createAdmin.js",
     "add-sample-data": "node scripts/addSampleData.js"
   },
