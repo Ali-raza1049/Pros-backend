@@ -1,0 +1,118 @@
+############################################
+
+# Node.js / MERN Backend .gitignore
+
+############################################
+
+# Dependencies
+
+node_modules/
+jspm_packages/
+
+# Logs
+
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory
+
+coverage/
+*.lcov
+
+# NYC test coverage
+
+.nyc_output/
+
+# Build output
+
+dist/
+build/
+
+# Next.js build
+
+.next/
+
+# Nuxt.js build
+
+.nuxt/
+
+# Cache
+
+.cache/
+.parcel-cache/
+
+# Environment variables
+
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+
+# OS generated files
+
+.DS_Store
+Thumbs.db
+
+# IDE / Editors
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Mac system files
+
+.AppleDouble
+.LSOverride
+
+# Windows system files
+
+ehthumbs.db
+Desktop.ini
+
+# Temporary files
+
+tmp/
+temp/
+
+# Optional uploads folder
+
+uploads/
+
+# Database files
+
+*.sqlite
+*.db
+
+# Firebase (if used)
+
+.firebase/
+
+# Docker
+
+docker-compose.override.yml
+
+# Misc
+
+*.tgz
+*.gz
+*.zip
+
+############################################
+
+# End of File
+
+############################################

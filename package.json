@@ -1,0 +1,25 @@
+{
+  "name": "pros-backend",
+  "version": "1.0.0",
+  "description": "Backend for All in One Pros - Node.js + MongoDB Atlas",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "smart-start": "node start-server.js",
+    "stop-server": "taskkill /F /IM node.exe 2>nul || echo No Node.js processes found",
+    "check-port": "netstat -ano | findstr :5000",
+    "create-admin": "node scripts/createAdmin.js",
+    "add-sample-data": "node scripts/addSampleData.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-validator": "^7.3.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.8.0"
+  }
+}
