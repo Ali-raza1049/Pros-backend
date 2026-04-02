@@ -8,76 +8,39 @@ import adminRoutes from './routes/admin.js';
 import serviceRoutes from './routes/services.js';
 import bookingRoutes from './routes/bookings.js';
 
-// Load env
 dotenv.config();
 
 const app = express();
 
-// Connect DB
-connectDB();
+// Connect to DB (optimized for serverless)
+let isConnected = false;
 
-// Trust proxy
-app.set('trust proxy', 1);
+const connectDatabase = async () => {
+if (isConnected) return;
+await connectDB();
+isConnected = true;
+};
 
-// CORS
-app.use(cors({
-  origin: true,
-  credentials: true
-}));
+await connectDatabase();
 
-// Body parser
+// Middleware
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Simple request log
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/services', serviceRoutes);
+app.use('/api/bookings', bookingRoutes);
+
+// Health check
+app.get('/api/health', (req, res) => {
+res.json({ message: 'Server is running!', status: 'ok' });
 });
 
-
-// ✅ ROOT
+// Root route
 app.get('/', (req, res) => {
-  res.json({
-    message: '🚀 All in One Pros API Running',
-    status: 'active'
-  });
-});
-
-
-// ✅ HEALTH (FIXED: removed /api)
-app.get('/health', (req, res) => {
-  res.json({
-    success: true,
-    message: '✅ Backend is healthy',
-    timestamp: new Date().toISOString()
-  });
-});
-
-
-// ✅ ROUTES (FIXED: removed /api)
-app.use('/auth', authRoutes);
-app.use('/admin', adminRoutes);
-app.use('/services', serviceRoutes);
-app.use('/bookings', bookingRoutes);
-
-
-// ✅ 404
-app.use('*', (req, res) => {
-  res.status(404).json({
-    success: false,
-    message: 'Route not found'
-  });
-});
-
-
-// ✅ ERROR HANDLER
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({
-    success: false,
-    message: 'Internal server error'
-  });
+res.json({ message: 'All in One Pros API', status: 'active' });
 });
 
 export default app;
