@@ -1,53 +1,43 @@
-import app from './app.js';
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
+import authRoutes from './routes/auth.js';
+import adminRoutes from './routes/admin.js';
+import serviceRoutes from './routes/services.js';
+import bookingRoutes from './routes/bookings.js';
 
-// Get port from environment or default to 5000
+dotenv.config();
+
+const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Start server with enhanced error handling
-const startServer = () => {
-  try {
-    const server = app.listen(PORT, '0.0.0.0', () => {
-      console.log('🚀 ================================');
-      console.log(`🚀 All in One Pros Backend Started`);
-      console.log('🚀 ================================');
-      console.log(`📡 Server running on port ${PORT}`);
-      console.log(`🌐 Local: http://localhost:${PORT}`);
-      console.log(`💚 Health: http://localhost:${PORT}/api/health`);
-      console.log(`📱 Frontend: http://localhost:5173`);
-      console.log(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
-      console.log('🚀 ================================');
-    });
+// Connect to database
+connectDB();
 
-    // Handle server errors
-    server.on('error', (err) => {
-      if (err.code === 'EADDRINUSE') {
-        console.log('❌ ================================');
-        console.log(`❌ Port ${PORT} is already in use!`);
-        console.log('❌ ================================');
-        console.log(`✅ Your server might already be running`);
-        console.log(`🌐 Check: http://localhost:${PORT}/api/health`);
-        console.log('🔧 Solutions:');
-        console.log('   1. Check if server is already running');
-        console.log('   2. Close other terminals running the server');
-        console.log('   3. Use different port: PORT=5001 npm start');
-        console.log('   4. Kill existing process: npm run stop-server');
-        console.log('❌ ================================');
-        process.exit(1);
-      } else {
-        console.error('❌ Server error:', err);
-        process.exit(1);
-      }
-    });
+// Middleware
+app.use(cors());
+app.use(express.json());
 
-    // Store server reference for graceful shutdown
-    global.server = server;
-    
-    return server;
-  } catch (error) {
-    console.error('❌ Failed to start server:', error);
-    process.exit(1);
-  }
-};
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/services', serviceRoutes);
+app.use('/api/bookings', bookingRoutes);
 
-// Start the server
-startServer();
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({ message: 'Server running!', status: 'ok' });
+});
+
+// Root
+app.get('/', (req, res) => {
+  res.json({ message: 'All in One Pros API' });
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+export default app;
